@@ -177,3 +177,5 @@ VALUES
 (1, 1, '2023-12-31');
 
 SELECT * FROM orders;
+
+DROP TABLE customers;
