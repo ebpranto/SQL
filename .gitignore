@@ -2,3 +2,6 @@
 .idea/
 .venv/
 __pycache__/
+Images/
+.vscode/
+1.sql
