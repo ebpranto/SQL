@@ -121,5 +121,73 @@ ON t1.category_id = t2.category_id
 WHERE t2.vertical = 'Chairs';
 
 
+-- -------------1:54:00---------------------------
+
+-- Find all profitable orders
+SELECT t1.order_id, SUM(t2.profit) AS profit
+ FROM flipkart.orders t1
+JOIN flipkart.order_details t2
+ON t1.order_id = t2.order_id
+GROUP BY t1.order_id
+HAVING profit > 0
+ORDER BY profit DESC;
+
+-- Find the customers who has places maximum numbers of orders
+SELECT t1.name, COUNT(*) AS 'total'
+FROM flipkart.users t1
+JOIN flipkart.orders t2
+ON t1.user_id = t2.user_id
+GROUP BY t1.name 
+ORDER BY total DESC LIMIT 1;
+
+SELECT t1.name, SUM(t3.quantity) AS 'quantity'
+FROM flipkart.users t1
+JOIN flipkart.orders t2
+ON t1.user_id = t2.user_id
+JOIN flipkart.order_details t3
+ON t2.order_id = t3.order_id
+GROUP BY t1.name
+ORDER BY quantity DESC;
+
+-- Which is the most profitable category
+SELECT t2.vertical, SUM(t1.profit) AS profit
+FROM flipkart.order_details t1
+JOIN flipkart.category t2
+ON t1.category_id = t2.category_id
+GROUP BY t2.vertical
+HAVING profit > 0
+ORDER BY profit DESC LIMIT 1;
+
+-- Which is the most profitable state
+SELECT t1.state, SUM(t3.profit) AS 'profit'
+FROM flipkart.users t1
+JOIN flipkart.orders t2
+ON t1.user_id = t2.user_id
+JOIN flipkart.order_details t3
+ON t2.order_id = t3.order_id
+GROUP BY t1.state
+HAVING profit > 0
+ORDER BY profit DESC
+LIMIT 1;
+
+
+-- Find categories with profit higher than 5000
+SELECT t2.category, SUM(t1.profit) AS 'profit'
+FROM flipkart.order_details t1
+JOIN flipkart.category t2
+ON t1.category_id = t2.category_id
+GROUP BY t2.category
+HAVING profit > 5000;
+
+
+
+
+
+
+
+
+
+
+
 
 
